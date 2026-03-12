@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 Универсальный Рандомайзер</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <h1>🎲 Рандомайзер</h1>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="wheel"> Колесо удачи </button>
+                <button class="tab-btn" data-tab="coin"> Орел или Решка</button>
+                <button class="tab-btn" data-tab="numbers"> Числа</button>
+                <button class="tab-btn" data-tab="password"> Пароли</button>
+                <button class="tab-btn" data-tab="nicknames"> Никнеймы</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Вкладка 1: Колесо -->
+    <div id="tab-wheel" class="tab-content active">
+        <div class="sidebar">
+            <h3>Участники</h3>
+            <div class="input-wrapper">
+                <input type="text" id="name-input" placeholder="Имя или вариант">
+                <button id="add-name-btn" class="add-btn-main">+</button>
+            </div>
+            <div class="data-controls">
+                <button id="export-btn" class="data-btn">📤 Экспорт</button>
+                <button id="import-btn" class="data-btn">📥 Импорт</button>
+                <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            </div>
+            <label style="display: flex; align-items: center; gap: 10px; margin: 15px 0; color: #aaa;">
+                <input type="checkbox" id="eliminate-mode"> Режим на выбывание
+            </label>
+            <div class="participants-list" id="participants-list"></div>
+            <div class="sidebar-footer">
+                <span id="count">0</span> участников | Максимум 50
+            </div>
+            <button id="clear-btn" class="clear-btn-main" style="width: 100%; margin-top: 10px;">Очистить всё</button>
+        </div>
+
+        <div class="main-content">
+            <div class="wheel-wrapper">
+                <div id="winner-label" class="winner-label">Победитель</div>
+                <div class="wheel-container">
+                    <div class="pointer"></div>
+                    <svg id="wheel-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                        <g id="wheel-sectors"></g>
+                    </svg>
+                </div>
+            </div>
+            <div id="result" class="result-display">Добавьте элементы и нажмите "Крутить колесо!"</div>
+        </div>
+
+        <div class="sidebar right-sidebar">
+            <div class="control-panel">
+                <div class="settings-section">
+                    <h3>Настройки спина</h3>
+                    <div class="duration-control">
+                        <label>Время (с):</label>
+                        <input type="number" id="duration-input" value="5" min="1" max="6000">
+                    </div>
+                    <button id="spin-btn" class="spin-btn-main" style="width: 100%; margin-top: 15px;">Крутить колесо!</button>
+                </div>
+                <div class="settings-section">
+                    <h3>Медиа</h3>
+                    <button id="upload-audio-btn" class="icon-btn"> Загрузить музыку</button>
+                    <input type="file" id="audio-file-input" accept="audio/*" style="display: none;">
+                    <audio id="spin-sound"></audio>
+                </div>
+                <div class="settings-section">
+                    <h3>Тема</h3>
+                    <button id="theme-toggle-btn" class="icon-btn">🎨 Настроить цвета</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка 2: Орел или Решка -->
+    <div id="tab-coin" class="tab-content">
+        <div class="coin-container">
+            <div id="coin-wrapper" class="coin-wrapper">
+                <div id="coin" class="coin" data-angle="0">
+                    <div class="side heads"><span>ОРЕЛ</span></div>
+                    <div class="side tails"><span>РЕШКА</span></div>
+                </div>
+                <div class="coin-shadow"></div>
+            </div>
+            <div id="coin-result">Нажми кнопку!</div>
+            <button id="flip-btn" class="flip-btn-main">Подбросить монету</button>
+            <div class="coin-stats">
+                <p>Орел: <span id="heads-count">0</span></p>
+                <p>Решка: <span id="tails-count">0</span></p>
+                <button id="reset-coin-stats" class="reset-stats-btn" title="Сбросить статистику">🗑️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка 3: Числа -->
+    <div id="tab-numbers" class="tab-content">
+        <div class="sidebar">
+            <h3>⚙️ Настройки</h3>
+            <div class="settings-section">
+    <label style="display: block; margin-bottom: 10px; color: #aaa;">Диапазон чисел</label>
+    <div class="input-wrapper">
+        <div style="flex: 1;">
+            <input type="number" id="num-min" placeholder="Мин" value="1" min="-999999" max="999999" style="width: 100%;">
+        </div>
+        <div style="flex: 1;">
+            <input type="number" id="num-max" placeholder="Макс" value="100" min="-999999" max="999999" style="width: 100%;">
+        </div>
+    </div>
+    <div class="input-wrapper" style="margin-top: 10px;">
+        <input type="number" id="num-count" placeholder="Количество" value="1" min="1" max="1000" style="width: 100%;">
+    </div>
+    <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+        <input type="checkbox" id="num-unique" checked>
+        Уникальные числа
+    </label>
+    <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+        <input type="checkbox" id="num-sort">
+        Сортировать результат
+    </label>
+</div>
+            <button id="generate-num-btn" class="spin-btn-main" style="width: 100%; margin-top: 20px;">🎲 Сгенерировать</button>
+            <div class="sidebar-footer" style="margin-top: 20px;">
+                <span id="num-history-count">История: 0</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="coin-container" style="min-height: 40vh;">
+                <div id="num-result" style="font-size: 3rem; font-weight: 800; text-align: center; color: #fff; min-height: 4rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; padding: 20px; width: 100%;">
+                    Нажмите "Сгенерировать"
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar right-sidebar">
+            <h3>📜 История</h3>
+            <div id="num-history-list" class="participants-list" style="max-height: 400px;">
+                <p style="color: #888; text-align: center; margin-top: 20px;">История пуста</p>
+            </div>
+            <button id="clear-num-history" class="clear-btn-main" style="width: 100%;">🗑️ Очистить историю</button>
+        </div>
+    </div>
+
+    <!-- Вкладка 4: Пароли -->
+    <div id="tab-password" class="tab-content">
+        <div class="sidebar">
+            <h3>⚙️ Настройки</h3>
+            <div class="settings-section">
+                <label style="display: block; margin-bottom: 10px; color: #aaa;">
+                    Длина пароля: <span id="pwd-length-value" style="color: #4a69bd; font-weight: bold;">16</span>
+                </label>
+                <input type="range" id="pwd-length" min="4" max="64" value="16" style="width: 100%; margin-bottom: 20px;">
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="pwd-uppercase" checked> Заглавные (A-Z)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="pwd-lowercase" checked> Строчные (a-z)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="pwd-numbers" checked> Цифры (0-9)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="pwd-symbols" checked> Спецсимволы (!@#$)
+                </label>
+            </div>
+            <button id="generate-pwd-btn" class="spin-btn-main" style="width: 100%; margin-top: 20px;">🔑 Сгенерировать пароль</button>
+            <div id="pwd-strength" style="margin-top: 15px; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">Надёжность: <span id="pwd-strength-text">-</span></div>
+        </div>
+
+        <div class="main-content">
+            <div class="coin-container" style="min-height: 40vh;">
+                <div id="pwd-result" style="font-size: 2rem; font-weight: 800; text-align: center; color: #fff; min-height: 4rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px; padding: 20px; width: 100%; word-break: break-all; font-family: monospace;">
+                    Нажмите "Сгенерировать пароль"
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button id="copy-pwd-btn" class="icon-btn" style="max-width: 200px;">📋 Копировать</button>
+                    <button id="refresh-pwd-btn" class="icon-btn" style="max-width: 200px;">🔄 Ещё раз</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar right-sidebar">
+            <h3>📜 История</h3>
+            <div id="pwd-history-list" class="participants-list" style="max-height: 400px;">
+                <p style="color: #888; text-align: center; margin-top: 20px;">История пуста</p>
+            </div>
+            <button id="clear-pwd-history" class="clear-btn-main" style="width: 100%;">🗑️ Очистить историю</button>
+        </div>
+    </div>
+
+    <!-- Вкладка 5: Никнеймы -->
+    <div id="tab-nicknames" class="tab-content">
+        <div class="sidebar">
+            <h3>⚙️ Настройки</h3>
+            <div class="settings-section">
+                <h4 style="margin-bottom: 15px; color: #4a69bd;">📝 Категория</h4>
+                <select id="nick-category" style="width: 100%; padding: 10px; background: #252540; border: 1px solid #3a3a5a; color: #fff; border-radius: 6px; margin-bottom: 15px;">
+                    <option value="gaming">🎮 Геймерские</option>
+                    <option value="creative">✨ Креативные</option>
+                    <option value="fantasy">🐉 Фэнтези</option>
+                    <option value="cool">🔥 Крутые</option>
+                    <option value="cute">🌸 Милые</option>
+                    <option value="based">👤 На основе имени</option>
+                </select>
+                <div id="name-input-wrapper" style="display: none;">
+                    <input type="text" id="nick-base-name" placeholder="Введите имя..." style="width: 100%; padding: 10px; background: #252540; border: 1px solid #3a3a5a; color: #fff; border-radius: 6px; margin-bottom: 10px;">
+                </div>
+                <h4 style="margin-bottom: 15px; color: #4a69bd;">🔤 Опции</h4>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="nick-add-numbers"> Добавить цифры
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="nick-special-chars"> Спецсимволы (_ - .)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="nick-x-style"> xX стиль (xX_Nick_Xx)
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
+                    <input type="checkbox" id="nick-caps" checked> Чередовать регистр
+                </label>
+                <h4 style="margin-bottom: 15px; color: #4a69bd;">📏 Длина</h4>
+                <select id="nick-length" style="width: 100%; padding: 10px; background: #252540; border: 1px solid #3a3a5a; color: #fff; border-radius: 6px;">
+                    <option value="short">Короткий (3-6)</option>
+                    <option value="medium" selected>Средний (7-12)</option>
+                    <option value="long">Длинный (13-20)</option>
+                </select>
+            </div>
+            <button id="generate-nick-btn" class="spin-btn-main" style="width: 100%; margin-top: 20px;">🎲 Сгенерировать ники</button>
+            <button id="save-favorite-nick" class="icon-btn" style="margin-top: 10px; background: #27ae60;">⭐ Сохранить в избранное</button>
+        </div>
+
+        <div class="main-content">
+            <div class="coin-container" style="min-height: 50vh;">
+                <div id="nick-results" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; width: 100%; padding: 20px;">
+                    <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Нажмите "Сгенерировать ники"</div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: center;">
+                    <button id="copy-all-nicks" class="icon-btn" style="max-width: 200px;">📋 Копировать все</button>
+                    <button id="regenerate-nicks" class="icon-btn" style="max-width: 200px;">🔄 Ещё раз</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar right-sidebar">
+            <h3>⭐ Избранное</h3>
+            <div id="nick-favorites-list" class="participants-list" style="max-height: 300px;">
+                <p style="color: #888; text-align: center; margin-top: 20px;">Нет избранных</p>
+            </div>
+            <h3 style="margin-top: 20px;">📜 История</h3>
+            <div id="nick-history-list" class="participants-list" style="max-height: 200px;">
+                <p style="color: #888; text-align: center; margin-top: 20px;">История пуста</p>
+            </div>
+            <button id="clear-nick-history" class="clear-btn-main" style="width: 100%;">🗑️ Очистить историю</button>
+        </div>
+    </div>
+
+    <!-- Панель темы -->
+    <div id="theme-panel" class="theme-panel">
+        <h3 style="margin: 0 0 10px 0; color: #fff;">🎨 Настройка темы</h3>
+        <div class="theme-option">
+            <label>Цвет фона:</label>
+            <input type="color" id="bg-color-picker" value="#0f0f1e">
+        </div>
+        <div class="theme-option">
+            <label>Цвет текста:</label>
+            <input type="color" id="text-color-picker" value="#e0e0e0">
+        </div>
+        <button id="reset-theme-btn" class="reset-theme-btn">Сбросить тему</button>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- === ФУТЕР С КОНФИДЕНЦИАЛЬНОСТЬЮ === -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-contact">
+            <span>📧 Помощь и комментарии:</span>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=supportnonamerandomazer@gmail.com" target="_blank" class="footer-email">
+    supportnonamerandomazer@gmail.com
+</a>
+        </div>
+        <button class="privacy-btn" id="privacy-btn">🔒 Конфиденциальность</button>
+    </div>
+</footer>
+
+<!-- Модальное окно -->
+<div class="modal-overlay" id="privacy-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>🔒 Политика конфиденциальности</h2>
+            <button class="modal-close" id="privacy-close">×</button>
+        </div>
+        <div class="modal-body">
+            <p class="privacy-main-text">
+                <strong>Этот сайт не собирает и не передаёт ваши личные данные.</strong>
+            </p>
+            <div class="privacy-list">
+                <div class="privacy-item">
+                    <span class="privacy-icon">✅</span>
+                    <span>Вся информация хранится только в вашем браузере</span>
+                </div>
+                <div class="privacy-item">
+                    <span class="privacy-icon">🔐</span>
+                    <span>Данные не отправляются на сервер</span>
+                </div>
+                <div class="privacy-item">
+                    <span class="privacy-icon">🚫</span>
+                    <span>Нет отслеживания и cookies для аналитики</span>
+                </div>
+                <div class="privacy-item">
+                    <span class="privacy-icon">📊</span>
+                    <span>История спинов, паролей и ников доступна только вам</span>
+                </div>
+            </div>
+            <p class="privacy-warning">
+                ⚠️ При очистке данных браузера вся сохранённая информация будет удалена
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-accept" id="privacy-accept">Понятно</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
