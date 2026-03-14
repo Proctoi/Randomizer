@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // === МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ===
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+if (isMobile) {
+    document.querySelectorAll('button, .tab-btn, .delete-participant').forEach(el => {
+        el.style.minWidth = '44px';
+        el.style.minHeight = '44px';
+    });
+}
+
+document.addEventListener('dblclick', function(event) {
+    event.preventDefault();
+}, { passive: false });
     // === ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ===
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -892,12 +905,10 @@ function applyLengthConstraint(nick) {
     const target = lengths[lengthType];
     let result = nick;
     
-    // Если ник слишком длинный - обрезаем
     if (result.length > target.max) {
         result = result.substring(0, target.max);
     }
     
-    // Если ник слишком короткий - добавляем символы
     while (result.length < target.min) {
         if (nickAddNumbers && nickAddNumbers.checked) {
             result += Math.floor(Math.random() * 10);
@@ -913,18 +924,15 @@ function applyLengthConstraint(nick) {
 function applyStyle(nick) {
     let result = nick;
     
-    // Спецсимволы
     if (nickSpecialChars && nickSpecialChars.checked && Math.random() > 0.5) {
         const char = getRandomItem(specialChars);
         result = Math.random() > 0.5 ? char + result : result + char;
     }
     
-    // xX стиль
     if (nickXStyle && nickXStyle.checked) {
         result = `xX_${result}_Xx`;
     }
     
-    // Чередование регистра
     if (nickCaps && nickCaps.checked && !nickXStyle.checked) {
         let capped = '';
         for (let i = 0; i < result.length; i++) {
@@ -933,7 +941,6 @@ function applyStyle(nick) {
         result = capped;
     }
     
-    // Цифры
     if (nickAddNumbers && nickAddNumbers.checked && Math.random() > 0.5) {
         result += Math.floor(Math.random() * 100);
     }
@@ -965,10 +972,8 @@ function generateNickFromCategory(category) {
         nick = prefix + root + suffix;
     }
     
-    // Применяем стили
     nick = applyStyle(nick);
     
-    // Применяем ограничение длины
     nick = applyLengthConstraint(nick);
     
     return nick;
@@ -1031,7 +1036,6 @@ function addToHistory(nicks) {
     saveNickData();
 }
 
-// === ИСПРАВЛЕННАЯ ФУНКЦИЯ updateFavoritesList ===
 function updateFavoritesList() {
     if (!nickFavoritesList) return;
     if (nickFavorites.length === 0) {
@@ -1045,7 +1049,6 @@ function updateFavoritesList() {
         </div>
     `).join('');
     
-    // Добавляем обработчики на кнопки удаления
     document.querySelectorAll('.remove-fav-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
@@ -1089,7 +1092,6 @@ function loadNickData() {
     if (nickCategory) showNameInput();
 }
 
-// Слушатели событий
 if (nickCategory) nickCategory.addEventListener('change', showNameInput);
 if (generateNickBtn) generateNickBtn.addEventListener('click', generateNicknames);
 if (regenerateNicks) regenerateNicks.addEventListener('click', generateNicknames);
@@ -1126,14 +1128,12 @@ if (clearNickHistory) clearNickHistory.addEventListener('click', () => {
     }
 });
 
-// Глобальная функция для копирования (чтобы работала из HTML onclick)
 window.copySingleNick = function(nick) {
     navigator.clipboard.writeText(nick).then(() => {
         showToast('✅ Ник скопирован!');
     });
 };
 
-// Глобальная функция для избранного (чтобы работала из HTML onclick)
 window.toggleFavorite = function(nick, btn) {
     const index = nickFavorites.indexOf(nick);
     if (index > -1) {
