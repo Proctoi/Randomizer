@@ -2,6 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f0f1e">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎲 Универсальный Рандомайзер</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -173,7 +176,7 @@
                     <input type="checkbox" id="pwd-symbols" checked> Спецсимволы (!@#$)
                 </label>
             </div>
-            <button id="generate-pwd-btn" class="spin-btn-main" style="width: 100%; margin-top: 20px;">🔑 Сгенерировать пароль</button>
+            <button id="generate-pwd-btn" class="spin-btn-main" style="width: 100%; margin-top: 20px;"> Сгенерировать пароль</button>
             <div id="pwd-strength" style="margin-top: 15px; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">Надёжность: <span id="pwd-strength-text">-</span></div>
         </div>
 
@@ -183,7 +186,7 @@
                     Нажмите "Сгенерировать пароль"
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button id="copy-pwd-btn" class="icon-btn" style="max-width: 200px;">📋 Копировать</button>
+                    <button id="copy-pwd-btn" class="icon-btn" style="max-width: 200px;"> Копировать</button>
                     <button id="refresh-pwd-btn" class="icon-btn" style="max-width: 200px;">🔄 Ещё раз</button>
                 </div>
             </div>
@@ -215,7 +218,7 @@
                 <div id="name-input-wrapper" style="display: none;">
                     <input type="text" id="nick-base-name" placeholder="Введите имя..." style="width: 100%; padding: 10px; background: #252540; border: 1px solid #3a3a5a; color: #fff; border-radius: 6px; margin-bottom: 10px;">
                 </div>
-                <h4 style="margin-bottom: 15px; color: #4a69bd;">🔤 Опции</h4>
+                <h4 style="margin-bottom: 15px; color: #4a69bd;"> Опции</h4>
                 <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
                     <input type="checkbox" id="nick-add-numbers"> Добавить цифры
                 </label>
@@ -228,7 +231,7 @@
                 <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #aaa;">
                     <input type="checkbox" id="nick-caps" checked> Чередовать регистр
                 </label>
-                <h4 style="margin-bottom: 15px; color: #4a69bd;">📏 Длина</h4>
+                <h4 style="margin-bottom: 15px; color: #4a69bd;"> Длина</h4>
                 <select id="nick-length" style="width: 100%; padding: 10px; background: #252540; border: 1px solid #3a3a5a; color: #fff; border-radius: 6px;">
                     <option value="short">Короткий (3-6)</option>
                     <option value="medium" selected>Средний (7-12)</option>
