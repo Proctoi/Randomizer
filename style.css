@@ -897,3 +897,248 @@ body {
         gap: 5px;
     }
 }
+/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+body {
+    padding-bottom: 140px;
+}
+
+@media (max-width: 992px) {
+    .tab-content.active {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .sidebar,
+    .right-sidebar {
+        max-height: none;
+        order: 2;
+    }
+
+    .main-content {
+        order: 1;
+    }
+
+    .wheel-container {
+        width: 300px !important;
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px;
+        padding-bottom: 140px;
+    }
+
+    .top-nav {
+        height: 60px;
+    }
+
+    .nav-container {
+        padding: 0 10px;
+    }
+
+    .nav-container h1 {
+        font-size: 1rem;
+    }
+
+    .tabs {
+        gap: 5px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 5px;
+    }
+
+    .tab-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        min-height: 44px;
+    }
+
+    .wheel-container {
+        width: 280px !important;
+        height: 280px !important;
+    }
+
+    .pointer {
+        width: 30px;
+        height: 40px;
+    }
+
+    .result-display {
+        bottom: 130px !important;
+        min-width: 280px !important;
+        padding: 15px 25px !important;
+        font-size: 1.2rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90% !important;
+        max-width: 400px !important;
+    }
+
+    .theme-panel {
+        bottom: 130px !important;
+        right: 10px !important;
+        left: 10px !important;
+        min-width: auto !important;
+        width: calc(100% - 20px) !important;
+    }
+
+    .coin-wrapper {
+        width: 180px !important;
+        height: 180px !important;
+    }
+
+    .coin-stats {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .spin-btn-main,
+    .flip-btn-main,
+    .add-btn-main,
+    .clear-btn-main {
+        padding: 12px 25px !important;
+        font-size: 1rem !important;
+        width: 100%;
+        min-height: 48px;
+    }
+
+    #name-input,
+    #num-min,
+    #num-max,
+    #num-count {
+        padding: 12px !important;
+        font-size: 1rem !important;
+        min-height: 44px;
+    }
+
+    .delete-participant,
+    .remove-fav-btn,
+    .delete-num-history,
+    .delete-pwd-history {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 1.2rem !important;
+    }
+
+    .num-result-item {
+        font-size: 2.5rem !important;
+        padding: 15px 25px !important;
+    }
+
+    #coin-result {
+        font-size: 2rem !important;
+    }
+
+    .nick-text {
+        font-size: 1.2rem !important;
+    }
+
+    .nick-actions {
+        flex-wrap: wrap;
+    }
+
+    .nick-action-btn {
+        flex: 1;
+        min-width: 120px;
+        min-height: 44px;
+    }
+
+    .participant-percent {
+        display: none;
+    }
+
+    .winner-label {
+        font-size: 1.4rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 55px;
+        padding-bottom: 140px;
+    }
+
+    .top-nav {
+        height: 55px;
+    }
+
+    .nav-container h1 {
+        font-size: 0.9rem;
+    }
+
+    .tab-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+
+    .wheel-container {
+        width: 250px !important;
+        height: 250px !important;
+    }
+
+    .coin-wrapper {
+        width: 150px !important;
+        height: 150px !important;
+    }
+
+    .result-display {
+        bottom: 145px !important;
+        font-size: 1rem !important;
+        padding: 12px 20px !important;
+    }
+
+    .theme-panel {
+        bottom: 145px !important;
+        padding: 15px !important;
+    }
+
+    button,
+    input[type="text"],
+    input[type="number"],
+    input[type="color"],
+    select {
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+@media (hover: none) {
+    .tab-btn:active,
+    .spin-btn-main:active,
+    .flip-btn-main:active,
+    .add-btn-main:active,
+    .clear-btn-main:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+}
+
+.participants-list,
+.num-history-list,
+.pwd-history-list,
+.nick-favorites-list,
+.nick-history-list,
+.sidebar,
+.right-sidebar {
+    -webkit-overflow-scrolling: touch;
+}
+
+button,
+.tab-btn,
+input,
+select {
+    touch-action: manipulation;
+}
